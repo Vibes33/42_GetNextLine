@@ -6,15 +6,17 @@
 /*   By: rydelepi <rydelepi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 12:53:53 by aeherve           #+#    #+#             */
-/*   Updated: 2025/11/08 13:52:28 by rydelepi         ###   ########.fr       */
+/*   Updated: 2025/11/08 14:10:06 by rydelepi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-	size_t i = 0;
+	size_t	i;
+
+	i = 0;
 	if (!s)
 		return (0);
 	while (s[i])
@@ -22,9 +24,11 @@ size_t ft_strlen(const char *s)
 	return (i);
 }
 
-int has_newline(char *s)
+int	has_newline(char *s)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	if (!s)
 		return (0);
 	while (s[i])
@@ -36,17 +40,13 @@ int has_newline(char *s)
 	return (0);
 }
 
-char *ft_strjoin_free(char *s1, char *s2)
+static void	ft_copy_strings(char *result, char *s1, char *s2)
 {
-	char *result;
-	size_t i = 0, j = 0;
-	size_t len1 = ft_strlen(s1);
-	size_t len2 = ft_strlen(s2);
+	size_t	i;
+	size_t	j;
 
-	result = malloc(len1 + len2 + 1);
-	if (!result)
-		return (NULL);
-	
+	i = 0;
+	j = 0;
 	while (s1 && s1[i])
 	{
 		result[i] = s1[i];
@@ -58,6 +58,20 @@ char *ft_strjoin_free(char *s1, char *s2)
 		j++;
 	}
 	result[i + j] = '\0';
+}
+
+char	*ft_strjoin_free(char *s1, char *s2)
+{
+	char	*result;
+	size_t	len1;
+	size_t	len2;
+
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	result = malloc(len1 + len2 + 1);
+	if (!result)
+		return (NULL);
+	ft_copy_strings(result, s1, s2);
 	free(s1);
 	return (result);
 }
