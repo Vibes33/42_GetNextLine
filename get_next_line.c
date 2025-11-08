@@ -6,7 +6,7 @@
 /*   By: rydelepi <rydelepi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 11:22:30 by rydelepi          #+#    #+#             */
-/*   Updated: 2025/11/08 14:16:04 by rydelepi         ###   ########.fr       */
+/*   Updated: 2025/11/08 16:00:10 by rydelepi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ char	*get_next_line(int fd)
 	char			buffer[BUFFER_SIZE + 1];
 	ssize_t			bytes_read;
 
+	bytes_read = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	while (!has_newline(gnl.stash))
@@ -100,7 +101,7 @@ char	*get_next_line(int fd)
 		if (!gnl.stash)
 			return (NULL);
 	}
-	if (bytes_read < 0 || (!gnl.stash || !*gnl.stash))
+	if (bytes_read < 0 || !gnl.stash || !*gnl.stash)
 	{
 		free(gnl.stash);
 		gnl.stash = NULL;
