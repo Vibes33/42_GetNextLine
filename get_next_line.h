@@ -1,31 +1,23 @@
 #ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#define GET_NEXT_LINE_H
 
-# include <fcntl.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 42
+#endif
 
-typedef struct s_gnl_v
+// Structure simplifiée : on garde juste ce qui reste après chaque lecture
+typedef struct s_gnl
 {
-	char		*line;
-	char		*buffer;
-	size_t		c_end; // dernier nn nul
-	size_t		c_treated;
-	size_t		c_endline; // premier nn traite
-} t_gnl_v;
+	char *stash; // Ce qui reste de la lecture précédente
+} t_gnl;
 
-char				*ft_strdup(char *s1);
-char				*ft_strchr(const char *s, int c);
-char				*ft_strjoin(char const *s1, char const *s2);
-static char			*_fill_line_buffer(int fd, char *left_c, char *buffer);
-static char			*_set_line(char *line);
-char				*get_next_line(int fd);
-size_t				ft_strlen(const char *str);
+char	*get_next_line(int fd);
+char	*ft_strjoin_free(char *s1, char *s2);
+char	*extract_line(char **stash);
+int		has_newline(char *s);
+size_t	ft_strlen(const char *s);
 
 #endif
